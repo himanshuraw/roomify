@@ -11,6 +11,8 @@ export default async function getCurrentUser() {
     try {
         const session = await getSession();
 
+        // console.log(`SESSION :: ${JSON.stringify(session)}`);
+
         if (!session?.user?.email) {
             return null;
         }
@@ -24,8 +26,14 @@ export default async function getCurrentUser() {
         if (!currentUser) {
             return null;
         }
-
-        return currentUser;
+        //since only plain objects can be passed to client component form server components.
+        //Date objects are not supported
+        return {
+            ...currentUser,
+            createdAt: currentUser.createdAt.toISOString(),
+            updatedAt: currentUser.updatedAt.toISOString(),
+            emailVerified: currentUser.emailVerified?.toISOString() || null,
+        };
 
     } catch (error: any) {
         return null;
