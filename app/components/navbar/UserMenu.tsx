@@ -2,6 +2,8 @@
 
 import { AiOutlineMenu } from "react-icons/ai"
 import { useState, useCallback } from "react"
+import { useRouter } from "next/navigation"
+import { signOut } from "next-auth/react"
 
 import Avatar from "../Avatar"
 import MenuItem from "./MenuItem"
@@ -10,7 +12,6 @@ import useRegisterModal from "@/app/hooks/useRegisterModal"
 import useLoginModal from "@/app/hooks/useLoginModal"
 import useRentModal from "@/app/hooks/useRentModal"
 
-import { signOut } from "next-auth/react"
 import { SafeUser } from "@/app/types"
 
 interface UserMenuProps {
@@ -20,6 +21,8 @@ interface UserMenuProps {
 const UserMenu: React.FC<UserMenuProps> = ({
     currentUser
 }) => {
+    const router = useRouter();
+
     const registerModal = useRegisterModal();
     const loginModal = useLoginModal();
     const rentModal = useRentModal();
@@ -101,7 +104,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
                         {currentUser ? (
                             <>
                             <MenuItem
-                                onClick={() => {}}
+                                onClick={() => router.push('/trips')}
                                 label="My trips"
                             />
                             <MenuItem
