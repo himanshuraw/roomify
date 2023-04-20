@@ -1,4 +1,4 @@
-import prisma from "@/app/libs/prismadb"
+import prisma from "@/app/libs/prismadb";
 
 export interface IListingsParams {
     userId?: string;
@@ -15,7 +15,6 @@ export default async function getListings(
     params: IListingsParams
 ) {
     try {
-
         const {
             userId,
             roomCount,
@@ -25,9 +24,9 @@ export default async function getListings(
             startDate,
             endDate,
             category,
-        } = params
+        } = params;
 
-        let query: any = {}
+        let query: any = {};
 
         if (userId) {
             query.userId = userId;
@@ -43,15 +42,15 @@ export default async function getListings(
             }
         }
 
-        if (bathroomCount) {
-            query.bathroomCount = {
-                gte: +bathroomCount
-            }
-        }
-
         if (guestCount) {
             query.guestCount = {
                 gte: +guestCount
+            }
+        }
+
+        if (bathroomCount) {
+            query.bathroomCount = {
+                gte: +bathroomCount
             }
         }
 
@@ -66,11 +65,11 @@ export default async function getListings(
                         OR: [
                             {
                                 endDate: { gte: startDate },
-                                startDate: { lte: startDate },
+                                startDate: { lte: startDate }
                             },
                             {
                                 startDate: { lte: endDate },
-                                endDate: { gte: endDate },
+                                endDate: { gte: endDate }
                             }
                         ]
                     }
@@ -84,13 +83,14 @@ export default async function getListings(
                 createdAt: 'desc'
             }
         });
-        const safeListings = listings.map((listings) => ({
-            ...listings,
-            createdAt: listings.createdAt.toISOString(),
+
+        const safeListings = listings.map((listing) => ({
+            ...listing,
+            createdAt: listing.createdAt.toISOString(),
         }));
 
         return safeListings;
     } catch (error: any) {
-        throw new Error(error)
+        throw new Error(error);
     }
 }
