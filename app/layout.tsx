@@ -12,6 +12,7 @@ import ToasterProvider from "./providers/ToasterProvider";
 import getCurrentUser from "./actions/getCurrentUser";
 import SearchModal from "./components/modals/SearchModal";
 
+
 export const metadata = {
   title: 'Roomify',
   description: 'Whether you’re traveling for business or pleasure, Roomify has you covered. Find and book cozy and comfortable rooms for your stay with just a few clicks. Roomy is the ultimate app for finding your home away from home.',
